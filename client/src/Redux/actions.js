@@ -8,6 +8,7 @@ import {
   ORDER_BY_RATING,
   GET_GENRES,
   POST_VIDEOGAME,
+  RESET_FILTERS,
 } from "./actiontypes";
 import axios from "axios";
 
@@ -105,5 +106,12 @@ export function postVideogames(dataGame) {
     } catch (error) {
       console.log(error.message);
     }
+  };
+}
+
+export function resetFilters(filtros) {
+  return {
+    type: RESET_FILTERS,
+    payload: filtros,
   };
 }
