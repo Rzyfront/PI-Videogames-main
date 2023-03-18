@@ -19,6 +19,7 @@ module.exports = (sequelize) => {
       name: {
         type: DataTypes.STRING,
         allowNull: false,
+        unique: true,
       },
       description: {
         type: DataTypes.TEXT,
@@ -38,6 +39,11 @@ module.exports = (sequelize) => {
       },
       rating: {
         type: DataTypes.FLOAT,
+        allowNull: false,
+      },
+      origin: {
+        type: DataTypes.STRING,
+        defaultValue: "db",
         allowNull: false,
       },
     },

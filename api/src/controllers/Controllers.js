@@ -16,6 +16,16 @@ const getVideogames = async () => {
     ++page;
   }
 
+  apiGames = apiGames.map((game) => {
+    return {
+      id: game.id,
+      name: game.name,
+      background_image: game.background_image,
+      genres: game.genres,
+      origin: "api",
+    };
+  });
+
   const dbGames = await Videogame.findAll({
     include: {
       model: Genre,
@@ -34,6 +44,7 @@ const getVideogames = async () => {
       name: game.name,
       background_image: game.background_image,
       genres: game.genres,
+      origin: game.origin,
     };
   });
 
@@ -63,7 +74,7 @@ const createVideogame = async (
   ) {
     throw Error("No existen los campos necesarios para crear un juego");
   }
-  // console.log(Videogame.getMixins());
+
   const newGame = await Videogame.create({
     name,
     description,
@@ -72,7 +83,7 @@ const createVideogame = async (
     released,
     rating,
   });
-  // console.log(newGame.__proto__);
+  //AGREGAR RELACION
   await newGame.addGenre(genres);
 
   return newGame;
@@ -145,6 +156,7 @@ const getGameByName = async (name) => {
       name: game.name,
       background_image: game.background_image,
       genres: game.genres,
+      origin: game.origin,
     };
   });
 
@@ -157,6 +169,7 @@ const getGameByName = async (name) => {
       name: game.name,
       background_image: game.background_image,
       genres: game.genres,
+      origin: "api",
     };
   });
 
@@ -186,7 +199,6 @@ const getAllGenres = async () => {
   });
 
   const gameGenres = await Genre.findAll();
-  console.log(gameGenres);
   if (gameGenres.length) {
     return gameGenres;
   } else {
