@@ -1,0 +1,242 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+@font-face {
+    font-family: gamer;
+    src: url('../../Assets/Acients.ttf') format('truetype');
+}
+
+.content{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+h2{
+ font-family: gamer;
+ font-size: 100px;
+ color:white;
+ opacity:0.6 ;
+ transition: 0.4s;
+}
+h2:hover{
+   opacity: 0.8;
+}
+
+.animate-h2 {
+    opacity: 0;
+    transition: opacity 0.8s ease-in-out;
+}
+.animate-h2-active {
+    opacity: 0.8;
+}
+
+h2.glitch {
+    text-shadow: 0 0 1px rgb(0, 0, 0), 0 0 1px rgb(5, 5, 5), 0 0 1px rgb(0, 0, 0);
+}
+h2.glitch:hover {
+    text-shadow: 0 0 1px white, 0 0 1px white, 0 0 1px white;
+    animation: glitch 0.3s linear ;
+}
+
+@keyframes glitch {
+    0% {
+        transform: skew(0deg);
+        opacity: 0.8;
+    }
+
+    20% {
+        transform: skew(5deg);
+        opacity: 0.6;
+    }
+
+    40% {
+        transform: skew(-5deg);
+        opacity: 0.2;
+    }
+
+    60% {
+        transform: skew(5deg);
+        opacity: 0.7;
+    }
+
+    80% {
+        transform: skew(-5deg);
+        opacity: 0.5;
+    }
+
+    100% {
+        transform: skew(0deg);
+        opacity: 0.8;
+    }
+}
+
+
+
+.bodylanding {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, #5d326c, #350048);
+    /*fiolet*/
+}
+
+.containerLanding {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+
+.containerLanding .btn {
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 300px;
+    height: 50px;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.containerLanding .btn .navlink {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.05);
+    box-shadow: 0 15px 15px rgba(0, 0, 0, 0.3);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 30px;
+    padding: 10px;
+    letter-spacing: 1px;
+    text-decoration: none;
+    overflow: hidden;
+    color: #fff;
+    font-weight: 400px;
+    z-index: 1;
+    transition: 0.5s;
+    backdrop-filter: blur(15px);
+}
+
+.containerLanding .btn:hover .navlink {
+letter-spacing: 3px;
+}
+
+.containerLanding .btn .navlink:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(to left, rgba(255, 255, 255, 0.15), transparent);
+    transform: skewX(45deg) translate(0);
+    transition: 0.5s;
+    filter: blur(0px);
+}
+
+.containerLanding .btn:hover .navlink:before {
+    transform: skewX(45deg) translate(200px);
+}
+
+.containerLanding .btn::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    transform: translatex(-50%);
+    bottom: -5px;
+    width: 30px;
+    height: 10px;
+    background: rgb(193, 39, 198);
+    border-radius: 10px;
+    transition: 0.5s;
+    transition-delay: 0.5;
+}
+
+.containerLanding .btn:hover::before{
+    bottom: 0;
+    height: 50%;
+    width: 90%;
+    border-radius: 30px;
+}
+
+.containerLanding .btn::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    transform: translatex(-50%);
+    top: -5px;
+    width: 30px;
+    height: 10px;
+    background: rgb(193, 39, 198);
+    border-radius: 10px;
+    transition: 0.5s;
+    transition-delay: 0.5;
+}
+
+.containerLanding .btn:hover::after{
+    top: 0;
+    height: 50%;
+    width: 90%;
+    border-radius: 30px;
+}
+
+.containerLanding .btn:nth-child(1)::before,
+/*chnage 1*/
+.containerLanding .btn:nth-child(1)::after {
+    background: #ff1f71;
+    box-shadow: 0 0 5px #ff1f71, 0 0 15px #ff1f71, 0 0 30px #ff1f71,
+        0 0 60px #ff1f71;
+}
+
+.Landing {
+    position: relative;
+    height: 100vh;
+}
+
+.Landing video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    object-fit: cover;
+}
+
+.Landing .content {
+    position: relative;
+    z-index: 1;
+    color: #fff;
+    text-align: center;
+    padding: 50px;
+    width: 100%;
+    height: 100vh;
+}
+
+.navlink{
+    text-decoration: none;
+    color: rgb(255, 255, 255);
+    padding: 3px 20px;
+    border-bottom: 3px solid rgba(0, 0, 0, 0.421);
+    letter-spacing: 0.2rem;
+    transition: all 0.3s ease-out 0.09s;
+    font-family: gamer;
+    font-size: 20px;
+}
