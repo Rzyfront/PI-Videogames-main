@@ -1,16 +1,24 @@
 import React from "react";
-import { IoFilterCircleOutline, IoFilterCircleSharp } from "react-icons/io5";
+// import { IoFilterCircleOutline, IoFilterCircleSharp } from "react-icons/io5";
+import { BiSearchAlt } from "react-icons/bi";
+import { AiOutlineArrowLeft, AiOutlineArrowRight } from "react-icons/ai";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllVideogames, getGenres } from "../../Redux/actions.js";
 import { NavLink } from "react-router-dom";
+import Card from "../Card/Card";
 import "./Home.css";
 
 const Home = () => {
-  const [toggleFilter, setToggleFilter] = useState();
+  // const [toggleFilter, setToggleFilter] = useState();
+  // const [filtros, setFiltros] = useState([]);
+  // const Filters = useSelector((state) => state.filters);
   const Games = useSelector((state) => state.allVideogames);
-  const Genres = useSelector((state) => state.allGenres);
+  const Genres = useSelector((state) => state.genres);
   const dispatch = useDispatch();
+  const gamesPerPage = 15; // Cantidad de juegos por página
+  const pagesCount = Math.ceil(Games.length / gamesPerPage); // Cantidad de páginas
+  const [currentPage, setCurrentPage] = useState(0); // Índice de la página actual
 
   useEffect(() => {
     if (!Games) {
@@ -18,6 +26,55 @@ const Home = () => {
       dispatch(getGenres());
     }
   });
+
+  const handlePageChange = (increment) => {
+    const nextPage = currentPage + increment;
+    if (nextPage >= 0 && nextPage < pagesCount) {
+      setCurrentPage(nextPage);
+    }
+  };
+
+  const gamesToRender = Games.slice(
+    currentPage * gamesPerPage,
+    (currentPage + 1) * gamesPerPage
+  );
+
+  const renderNavigationButtons = () => {
+    return (
+      <div>
+        <AiOutlineArrowLeft onClick={() => handlePageChange(-1)} />
+        <span>{`Página ${currentPage + 1} de ${pagesCount}`}</span>
+        <AiOutlineArrowRight onClick={() => handlePageChange(1)} />
+      </div>
+    );
+  };
+  const renderPageNumbers = () => {
+    const pageNumbers = Array.from({ length: pagesCount }, (_, i) => i);
+    return (
+      <ul>
+        {pageNumbers.map((pageNumber) => (
+          <li key={pageNumber}>
+            <button onClick={() => setCurrentPage(pageNumber)}>
+              {pageNumber + 1}
+            </button>
+          </li>
+        ))}
+      </ul>
+    );
+  };
+
+  const renderGames = () => {
+    return gamesToRender.map((game) => {
+      return (
+        <Card
+          key={game.id}
+          name={game.name}
+          image={game.image}
+          genres={game.genres}
+        />
+      );
+    });
+  };
 
   const handleSort = () => {};
 
@@ -29,7 +86,7 @@ const Home = () => {
 
   return (
     <div className="Home">
-      <div className="Filters">
+      {/* <div className="Filters">
         <div className="filterMenu">
           {toggleFilter ? (
             <IoFilterCircleOutline
@@ -50,7 +107,7 @@ const Home = () => {
             </div>
           )}
         </div>
-      </div>
+      </div> */}
 
       <div className="renderCards">
         <section>
@@ -72,28 +129,30 @@ const Home = () => {
                     name="search"
                     placeholder="Busca tus juegos favoritos aqui..."
                   />
-                  <button>Buscar</button>
+                  <button>
+                    Buscar
+                    <BiSearchAlt className="lupita" />
+                  </button>
                 </div>
               </div>
+
               <div className="filters">
                 <NavLink>
                   <button>Crear Juego +</button>
                 </NavLink>
                 <div className="selectores">
                   <select onChange={(e) => handleSort(e)}>
-                    <option value="Order-Alphabetical">
-                      Order from the...
-                    </option>
-                    <option value="A-Z"> A-Z </option>
-                    <option value="Z-A"> Z-A </option>
+                    <option value="Order-Alphabetical">Alfabeticamente</option>
+                    <option value="asc"> A-Z </option>
+                    <option value="des"> Z-A </option>
                   </select>
                   <select onChange={(e) => handleRatingSort(e)}>
-                    <option value="Order-Rating">Order by rating</option>
-                    <option value="Men-May">Men-May</option>
-                    <option value="May-Men">May-Men</option>
+                    <option value="Order-Rating">Ordena por rating</option>
+                    <option value="asc">Mas populares</option>
+                    <option value="des">Menos populares</option>
                   </select>
                   <select onChange={(e) => handleGenres(e)}>
-                    <option value="All">Genres</option>
+                    <option value="All">Ordena por generos</option>
                     {Genres?.map((el) => (
                       <option key={el.id} value={el.name}>
                         {el.name}
@@ -102,11 +161,18 @@ const Home = () => {
                   </select>
                   <select onChange={(e) => handleFilterCreated(e)}>
                     <option value="All">All</option>
-                    <option value="Created">Created in DB</option>
-                    <option value="Existing">From the API</option>
+                    <option value="Created">Juegos Creados</option>
+                    <option value="Existing">Juegos API</option>
                   </select>
                 </div>
               </div>
+
+              <div className="paginado">
+                {renderNavigationButtons()}
+                {renderPageNumbers()}
+              </div>
+
+              <div className="cajon">{renderGames()}</div>
             </div>
           </div>
         </section>
