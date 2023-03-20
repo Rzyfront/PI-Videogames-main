@@ -1,0 +1,139 @@
+* {
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Gamer', sans-serif;
+}
+
+body {
+    overflow: hidden;
+}
+
+.Form {
+    background-color: #12122a;
+}
+
+section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background-color: linear-gradient(to bottom, #05002d, #05002d);
+}
+
+section .color {
+    position: absolute;
+    filter: blur(150px);
+}
+
+section .color:nth-child(1) {
+    top: -350;
+    width: 800px;
+    height: 600px;
+    background-color: rgba(193, 39, 198, 0.603);
+}
+
+section .color:nth-child(2) {
+    bottom: 250px;
+    left: 80px;
+    width: 400px;
+    height: 250px;
+    background-color: #ffffff80;
+}
+
+section .color:nth-child(3) {
+    bottom: -150px;
+    right: 40px;
+    width: 500px;
+    height: 550px;
+    background-color: #15225cb1;
+}
+
+section .box {
+    position: relative;
+}
+
+section .box .square {
+    position: absolute;
+    backdrop-filter: blur(5px);
+    box-shadow: 0 25px 45px rgba(0, 0, 0, 0.1);
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    animation: animate 10s linear infinite;
+    animation-delay: calc(-1s * var(--i));
+}
+
+@keyframes animate {
+
+    0%,
+    100% {
+        transform: translate(-30px);
+    }
+
+    50% {
+        transform: translate(30px);
+    }
+}
+
+section .box .square:nth-child(1) {
+    top: -50px;
+    right: -60px;
+    width: 100px;
+    height: 100px;
+}
+
+section .box .square:nth-child(2) {
+    top: 150px;
+    left: -80px;
+    width: 100px;
+    height: 100px;
+    z-index: 2;
+}
+
+section .box .square:nth-child(3) {
+    bottom: 50px;
+    right: -60px;
+    width: 80px;
+    height: 80px;
+    z-index: 2;
+}
+
+section .box .square:nth-child(4) {
+    bottom: -80px;
+    left: 100px;
+    width: 50px;
+    height: 50px;
+}
+
+section .box .square:nth-child(5) {
+    top: -80px;
+    left: 140px;
+    width: 60px;
+    height: 60px;
+}
+
+section .container {
+    position: relative;
+    width: 950px;
+    min-height: 620px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    backdrop-filter: blur(5px);
+    box-shadow: 0 25px 45px rgba(0, 0, 0, 0.1);
+    align-items: center;
+}
+
+#formcreate{
+    display: flex;
+    flex-direction: column;
+}
+
+.inputs{
+    display: flex;
+    flex-direction: column;
+}
+
+.inputs .input{
+    width: 200px;
+}

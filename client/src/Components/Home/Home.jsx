@@ -137,7 +137,7 @@ const Home = () => {
               </div>
 
               <div className="filters">
-                <NavLink>
+                <NavLink to={'/create'}>
                   <button>Crear Juego +</button>
                 </NavLink>
                 <div className="selectores">
