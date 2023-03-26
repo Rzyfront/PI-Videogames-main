@@ -1,60 +1,111 @@
 import React from "react";
 // import { IoFilterCircleOutline, IoFilterCircleSharp } from "react-icons/io5";
-import { BiSearchAlt } from "react-icons/bi";
 import { AiOutlineArrowLeft, AiOutlineArrowRight } from "react-icons/ai";
+import { BiSearchAlt } from "react-icons/bi";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllVideogames, getGenres } from "../../Redux/actions.js";
+import {
+  getAllVideogames,
+  getGenres,
+  getVideogameByName,
+  reFilter,
+} from "../../Redux/actions.js";
 import { NavLink } from "react-router-dom";
 import Card from "../Card/Card";
 import "./Home.css";
+import { Loading } from "../Loading/Loading";
 
 const Home = () => {
   // const [toggleFilter, setToggleFilter] = useState();
-  // const [filtros, setFiltros] = useState([]);
-  // const Filters = useSelector((state) => state.filters);
-  const Games = useSelector((state) => state.allVideogames);
   const Genres = useSelector((state) => state.genres);
   const dispatch = useDispatch();
-  const gamesPerPage = 15; // Cantidad de juegos por página
-  const pagesCount = Math.ceil(Games.length / gamesPerPage); // Cantidad de páginas
-  const [currentPage, setCurrentPage] = useState(0); // Índice de la página actual
+  const Filters = useSelector((state) => state.filters);
+  const gamesPerPage = 15;
+  const pagesCount = Math.ceil(Filters.length / gamesPerPage);
+  const [filtros, setFiltros] = useState({
+    alphabetic: "none",
+    rating: "none",
+    origin: "none",
+    genre: "none",
+  });
+  const [loading, setLoading] = useState(true);
+  const [activePage, setActivePage] = useState(0);
+  const [currentPage, setCurrentPage] = useState(0);
+  const [name, setName] = useState("");
 
   useEffect(() => {
-    if (!Games) {
+    if (!Filters || Filters.length === 0) {
       dispatch(getAllVideogames());
+    }
+    setTimeout(() => {
+      setLoading(false);
+    }, 3000);
+  }, []);
+
+  useEffect(() => {
+    if (!Genres || Genres.length === 0) {
       dispatch(getGenres());
     }
-  });
+  }, [Genres]);
+
+  useEffect(() => {
+    dispatch(reFilter(filtros));
+  }, [filtros]);
 
   const handlePageChange = (increment) => {
     const nextPage = currentPage + increment;
     if (nextPage >= 0 && nextPage < pagesCount) {
+      setLoading(true);
       setCurrentPage(nextPage);
+      setActivePage(nextPage);
+      setTimeout(() => {
+        setLoading(false);
+      }, 600);
     }
   };
 
-  const gamesToRender = Games.slice(
+  const gamesToRender = Filters.slice(
     currentPage * gamesPerPage,
     (currentPage + 1) * gamesPerPage
   );
 
   const renderNavigationButtons = () => {
     return (
-      <div>
-        <AiOutlineArrowLeft onClick={() => handlePageChange(-1)} />
-        <span>{`Página ${currentPage + 1} de ${pagesCount}`}</span>
-        <AiOutlineArrowRight onClick={() => handlePageChange(1)} />
+      <div className="pag-container">
+        <AiOutlineArrowLeft
+          className="pag-btn arrows"
+          onClick={() => handlePageChange(-1)}
+        />
+        {renderPageNumbers()}
+        <AiOutlineArrowRight
+          className="pag-btn arrows"
+          onClick={() => handlePageChange(1)}
+        />
       </div>
     );
   };
+
   const renderPageNumbers = () => {
     const pageNumbers = Array.from({ length: pagesCount }, (_, i) => i);
+
     return (
-      <ul>
+      <ul className="numbers">
         {pageNumbers.map((pageNumber) => (
           <li key={pageNumber}>
-            <button onClick={() => setCurrentPage(pageNumber)}>
+            <button
+              key={pageNumber}
+              className={`pag-btn ${activePage === pageNumber ? "active" : ""}`}
+              onClick={() => {
+                if (pageNumber !== currentPage) {
+                  setLoading(true);
+                  setCurrentPage(pageNumber);
+                  setActivePage(pageNumber);
+                  setTimeout(() => {
+                    setLoading(false);
+                  }, 600);
+                }
+              }}
+            >
               {pageNumber + 1}
             </button>
           </li>
@@ -68,47 +119,51 @@ const Home = () => {
       return (
         <Card
           key={game.id}
+          id={game.id}
           name={game.name}
-          image={game.image}
+          image={game.background_image}
           genres={game.genres}
         />
       );
     });
   };
 
-  const handleSort = () => {};
+  const handleFilters = (event) => {
+    const { value, name } = event.target;
+    if (filtros[name] !== value) {
+      setFiltros({
+        ...filtros,
+        [name]: value,
+      });
+      setLoading(true);
+      setCurrentPage(0);
+      setActivePage(0);
+      setTimeout(() => {
+        setLoading(false);
+      }, 400);
 
-  const handleRatingSort = () => {};
+      dispatch(reFilter(filtros));
+    }
+  };
 
-  const handleGenres = () => {};
+  const inputHandler = (event) => {
+    setName(event.target.value);
+    console.log(event.target.value);
+  };
 
-  const handleFilterCreated = () => {};
-
+  const handleSearch = () => {
+    if (name !== "") {
+      dispatch(getVideogameByName(name));
+      setLoading(true);
+      setCurrentPage(0);
+      setActivePage(0);
+      setTimeout(() => {
+        setLoading(false);
+      }, 1000);
+    }
+  };
   return (
     <div className="Home">
-      {/* <div className="Filters">
-        <div className="filterMenu">
-          {toggleFilter ? (
-            <IoFilterCircleOutline
-              color="fff"
-              size={27}
-              onClick={() => setToggleFilter(false)}
-            />
-          ) : (
-            <IoFilterCircleSharp
-              color="fff"
-              size={27}
-              onClick={() => setToggleFilter(true)}
-            />
-          )}
-          {toggleFilter && (
-            <div className="filterMenu-toggle">
-              <div className="filters"></div>
-            </div>
-          )}
-        </div>
-      </div> */}
-
       <div className="renderCards">
         <section>
           <div className="color"></div>
@@ -128,8 +183,9 @@ const Home = () => {
                     type="text"
                     name="search"
                     placeholder="Busca tus juegos favoritos aqui..."
+                    onChange={inputHandler}
                   />
-                  <button>
+                  <button onClick={handleSearch}>
                     Buscar
                     <BiSearchAlt className="lupita" />
                   </button>
@@ -137,42 +193,70 @@ const Home = () => {
               </div>
 
               <div className="filters">
-                <NavLink to={'/create'}>
-                  <button>Crear Juego +</button>
+                <NavLink to={"/create"}>
+                  <button
+                    onClick={() => {
+                      dispatch(getVideogameByName());
+                    }}
+                  >
+                    Crear Juego +
+                  </button>
                 </NavLink>
                 <div className="selectores">
-                  <select onChange={(e) => handleSort(e)}>
-                    <option value="Order-Alphabetical">Alfabeticamente</option>
+                  <select
+                    onChange={(e) => handleFilters(e)}
+                    name="alphabetic"
+                    value={filtros.alphabetic}
+                  >
+                    <option value="none">Alfabeticamente</option>
                     <option value="asc"> A-Z </option>
-                    <option value="des"> Z-A </option>
+                    <option value="desc"> Z-A </option>
                   </select>
-                  <select onChange={(e) => handleRatingSort(e)}>
-                    <option value="Order-Rating">Ordena por rating</option>
-                    <option value="asc">Mas populares</option>
-                    <option value="des">Menos populares</option>
+                  <select
+                    onChange={(e) => handleFilters(e)}
+                    name="rating"
+                    value={filtros.rating}
+                  >
+                    <option value="none">Ordena por rating</option>
+                    <option value="desc">Mas populares</option>
+                    <option value="asc">Menos populares</option>
                   </select>
-                  <select onChange={(e) => handleGenres(e)}>
+                  <select
+                    onChange={(e) => handleFilters(e)}
+                    name="genre"
+                    value={filtros.genre}
+                  >
                     <option value="All">Ordena por generos</option>
-                    {Genres?.map((el) => (
-                      <option key={el.id} value={el.name}>
+                    {Genres?.map((el, index) => (
+                      <option key={index} value={el.name}>
                         {el.name}
                       </option>
                     ))}
                   </select>
-                  <select onChange={(e) => handleFilterCreated(e)}>
-                    <option value="All">All</option>
-                    <option value="Created">Juegos Creados</option>
-                    <option value="Existing">Juegos API</option>
+                  <select
+                    onChange={(e) => handleFilters(e)}
+                    name="origin"
+                    value={filtros.origin}
+                  >
+                    <option value="none">Origen</option>
+                    <option value="none">All</option>
+                    <option value="db">Juegos Creados</option>
+                    <option value="api">Juegos API</option>
                   </select>
                 </div>
               </div>
 
-              <div className="paginado">
-                {renderNavigationButtons()}
-                {renderPageNumbers()}
-              </div>
+              <div className="paginado">{renderNavigationButtons()}</div>
 
-              <div className="cajon">{renderGames()}</div>
+              <div className="cajon">
+                {loading ? (
+                  <div className="loading">
+                    <Loading />
+                  </div>
+                ) : (
+                  renderGames()
+                )}
+              </div>
             </div>
           </div>
         </section>

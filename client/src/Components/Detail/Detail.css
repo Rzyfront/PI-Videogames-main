@@ -1,0 +1,275 @@
+* {
+    margin: 0;
+    box-sizing: border-box;
+    padding: 0;
+}
+
+section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background-color: linear-gradient(to bottom, #05002d, #05002d);
+}
+
+section .color {
+    position: absolute;
+    filter: blur(150px);
+}
+
+section .color:nth-child(1) {
+    top: -350;
+    width: 800px;
+    height: 600px;
+    background-color: rgba(193, 39, 198, 0.603);
+}
+
+section .color:nth-child(2) {
+    bottom: 250px;
+    left: 80px;
+    width: 400px;
+    height: 250px;
+    background-color: #ffffff80;
+}
+
+section .color:nth-child(3) {
+    bottom: -150px;
+    right: 40px;
+    width: 500px;
+    height: 550px;
+    background-color: #15225cb1;
+}
+
+section .box {
+    position: relative;
+}
+
+section .box .square {
+    position: absolute;
+    backdrop-filter: blur(5px);
+    box-shadow: 0 25px 45px rgba(0, 0, 0, 0.1);
+    background:var(--bg-secondary);
+    border-radius: 10px;
+    animation: animate 10s linear infinite;
+    animation-delay: calc(-1s * var(--i));
+}
+
+@keyframes animate {
+
+    0%,
+    100% {
+        transform: translate(-30px);
+    }
+
+    50% {
+        transform: translate(30px);
+    }
+}
+
+section .box .square:nth-child(1) {
+    top: -50px;
+    right: -60px;
+    width: 100px;
+    height: 100px;
+}
+
+section .box .square:nth-child(2) {
+    top: 150px;
+    left: -80px;
+    width: 100px;
+    height: 100px;
+    z-index: 2;
+}
+
+section .box .square:nth-child(3) {
+    bottom: 50px;
+    right: -60px;
+    width: 80px;
+    height: 80px;
+    z-index: 2;
+}
+
+section .box .square:nth-child(4) {
+    bottom: -80px;
+    left: 100px;
+    width: 50px;
+    height: 50px;
+}
+
+section .box .square:nth-child(5) {
+    top: -80px;
+    left: 140px;
+    width: 60px;
+    height: 60px;
+}
+
+section .container {
+    position: relative;
+    width: 950px;
+    min-height: 530px;
+    background-color: var(--bg-secondary);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    backdrop-filter: blur(5px);
+    box-shadow: 0 25px 45px rgba(0, 0, 0, 0.1);
+    align-items: center;
+    justify-content: center;
+}
+
+.volver{
+    top: 20px;
+    left: 0;
+    position: absolute;
+    z-index: 1;
+}
+
+.volver button{
+    transition: 0.4s;
+    width: 100px;
+    height: 30px;
+    background-color: var(--primary);
+    border: none;
+    outline: none;
+    font-size: 20px;
+    color: var(--tertiary);
+    border-radius: 0 6px 6px 0;
+    cursor: pointer;
+    font-family: var(--text);
+    font-weight: 600;
+}
+
+.volver button:hover{
+    background-color: rgba(193, 39, 198, 0.603)
+}
+
+.spliter{
+    width: 80%;
+    height: 1px;
+    margin: 5px;
+    background-color: var(--primary);
+    opacity: 0.6;
+    transition: 0.4s;
+}
+
+.detailCard{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.detailCard:hover h2,
+.detailCard:hover h4,
+.detailCard:hover .spliter,
+.detailCard:hover .subtitle,
+.detailCard:hover p,
+.detailCard:hover .info{
+    opacity: 1;
+}
+
+
+.img {
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+}
+.img img{
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+}
+
+
+.info {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity:0.6;
+    transition: 0.4s;
+    border-radius: 10px;
+    /* ff 3.6+ */
+        background: -moz-linear-gradient(90deg, rgba(0, 0, 0, 0.52) 11%, rgba(0, 0, 0, 0.62) 34%, rgba(0, 0, 0, 0.74) 63%, rgba(0, 0, 0, 0.88) 94%);
+    
+        /* safari 5.1+,chrome 10+ */
+        background: -webkit-linear-gradient(90deg, rgba(0, 0, 0, 0.52) 11%, rgba(0, 0, 0, 0.62) 34%, rgba(0, 0, 0, 0.74) 63%, rgba(0, 0, 0, 0.88) 94%);
+    
+        /* opera 11.10+ */
+        background: -o-linear-gradient(90deg, rgba(0, 0, 0, 0.52) 11%, rgba(0, 0, 0, 0.62) 34%, rgba(0, 0, 0, 0.74) 63%, rgba(0, 0, 0, 0.88) 94%);
+    
+        /* ie 6-9 */
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#000000', endColorstr='#000000', GradientType=0);
+    
+        /* ie 10+ */
+        background: -ms-linear-gradient(90deg, rgba(0, 0, 0, 0.52) 11%, rgba(0, 0, 0, 0.62) 34%, rgba(0, 0, 0, 0.74) 63%, rgba(0, 0, 0, 0.88) 94%);
+    
+        /* global 94%+ browsers support */
+        background: linear-gradient(90deg, rgba(0, 0, 0, 0.52) 11%, rgba(0, 0, 0, 0.62) 34%, rgba(0, 0, 0, 0.74) 63%, rgba(0, 0, 0, 0.88) 94%);
+}
+
+.left{
+    width: 400px;
+    height: 400px;
+}
+
+.rigth{
+    width: 400px;
+    height: 400px;
+}
+
+.left h2{
+    font-size: 40px;
+    padding: 10px;
+    font-weight: 300;
+    opacity: 1;
+}
+
+.left h4{
+    font-size: 15px;
+    font-weight: 300;
+    padding-left: 10px;
+    opacity: 0.6;
+    color: var(--primary);
+    transition: 0.4s;
+    font-family: var(--text);
+}
+
+.detailCard .subtitle {
+    font-size: 20px;
+    border-bottom: solid 1px var(--primary);
+    width: 40%;
+    margin-left: 5px;
+    font-family: var(--title);
+    opacity: 0.6;
+    transition: 0.4s;
+}
+
+.rigth h4{
+    font-size: 20px;
+    padding: 10px;
+    color: var(--primary);
+    border-bottom: solid 1px var(--primary);
+    margin-left: 5px;
+    margin-top: 10px;
+}
+
+.rigth p{
+    padding: 10px;
+    color: var(--primary);
+    font-family: var(--text);
+    opacity: 0.6;
+    transition: 0.4s;
+}
+
+.detailCard div{
+    overflow: auto;
+    
+}
+

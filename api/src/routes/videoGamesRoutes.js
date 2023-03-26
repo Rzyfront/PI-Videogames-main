@@ -56,6 +56,7 @@ router.post("/videogames", async (req, res) => {
     res.status(200).json(newGame);
   } catch (error) {
     res.status(400).json({ error: error.message });
+    console.log(error.message);
   }
 });
 

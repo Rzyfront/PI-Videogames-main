@@ -26,7 +26,7 @@ module.exports = (sequelize) => {
         allowNull: false,
       },
       platforms: {
-        type: DataTypes.STRING,
+        type: DataTypes.JSONB,
         allowNull: false,
       },
       background_image: {

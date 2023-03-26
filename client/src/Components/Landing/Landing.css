@@ -4,10 +4,7 @@
     box-sizing: border-box;
 }
 
-@font-face {
-    font-family: gamer;
-    src: url('../../Assets/Acients.ttf') format('truetype');
-}
+
 
 .content{
     display: flex;
@@ -18,7 +15,7 @@
 h2{
  font-family: gamer;
  font-size: 100px;
- color:white;
+ color:var(--primary);
  opacity:0.6 ;
  transition: 0.4s;
 }
@@ -127,7 +124,7 @@ h2.glitch:hover {
     letter-spacing: 1px;
     text-decoration: none;
     overflow: hidden;
-    color: #fff;
+    color: var(--primary);
     font-weight: 400px;
     z-index: 1;
     transition: 0.5s;
@@ -163,7 +160,7 @@ letter-spacing: 3px;
     bottom: -5px;
     width: 30px;
     height: 10px;
-    background: rgb(193, 39, 198);
+    background: var(--secondary);
     border-radius: 10px;
     transition: 0.5s;
     transition-delay: 0.5;
@@ -184,7 +181,7 @@ letter-spacing: 3px;
     top: -5px;
     width: 30px;
     height: 10px;
-    background: rgb(193, 39, 198);
+    background: var(--secondary);
     border-radius: 10px;
     transition: 0.5s;
     transition-delay: 0.5;
@@ -223,7 +220,7 @@ letter-spacing: 3px;
 .Landing .content {
     position: relative;
     z-index: 1;
-    color: #fff;
+    color: var(--primary);
     text-align: center;
     padding: 50px;
     width: 100%;
@@ -232,11 +229,11 @@ letter-spacing: 3px;
 
 .navlink{
     text-decoration: none;
-    color: rgb(255, 255, 255);
+    color: var(--primary);
     padding: 3px 20px;
     border-bottom: 3px solid rgba(0, 0, 0, 0.421);
     letter-spacing: 0.2rem;
     transition: all 0.3s ease-out 0.09s;
-    font-family: gamer;
+    font-family: var(--title);
     font-size: 20px;
 }

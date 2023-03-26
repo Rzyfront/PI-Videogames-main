@@ -98,7 +98,7 @@ export function postVideogames(dataGame) {
   return async function (dispatch) {
     try {
       const result = await axios.post(
-        "http://localhost:3001/videogame",
+        "http://localhost:3001/videogames",
         dataGame
       );
       //agregalo a los juegos que se muestran en pantalla
@@ -109,7 +109,7 @@ export function postVideogames(dataGame) {
   };
 }
 
-export function resetFilters(filtros) {
+export function reFilter(filtros) {
   return {
     type: RESET_FILTERS,
     payload: filtros,

@@ -29,7 +29,8 @@ const rootReducer = (state = initialState, { type, payload }) => {
     case GET_VIDEOGAME_BY_NAME:
       return {
         ...state,
-        videogames: payload,
+        allVideogames: payload,
+        filters: payload,
       };
     case GET_GAME_DETAILS:
       return {
@@ -75,35 +76,59 @@ const rootReducer = (state = initialState, { type, payload }) => {
         filters: sortedGamesByName,
       };
     case ORDER_BY_RATING:
-      const sortedGamesByRating = [...state.filters].sort((gameA, gameB) => {
-        const ratingA = gameA.rating;
-        const ratingB = gameB.rating;
-        if (payload === "asc") {
-          return ratingA - ratingB;
-        } else if (payload === "desc") {
-          return ratingB - ratingA;
-        } else {
-          return 0;
-        }
-      });
+      let juegosOrdenados;
+      if (payload === "asc") {
+        juegosOrdenados = [...state.filters].sort(
+          (a, b) => a.rating - b.rating
+        );
+      } else if (payload === "desc") {
+        juegosOrdenados = [...state.filters].sort(
+          (a, b) => b.rating - a.rating
+        );
+      }
       return {
         ...state,
-        filters: sortedGamesByRating,
+        filters: juegosOrdenados,
       };
     case RESET_FILTERS:
       const currentFilters = payload;
-      let filteredGames = [...state.allVideogames];
-      currentFilters.forEach((filter) => {
-        if (filter.type === "origin") {
-          filteredGames = filteredGames.filter(
-            (game) => game.origin === filter.value
-          );
-        } else if (filter.type === "genre") {
-          filteredGames = filteredGames.filter((game) =>
-            game.genres.some((genre) => genre.name === filter.value)
-          );
-        }
-      });
+      let filteredGames = state.allVideogames;
+
+      if (currentFilters.rating === "asc") {
+        filteredGames = [...filteredGames].sort((a, b) => a.rating - b.rating);
+      } else if (currentFilters.rating === "desc") {
+        filteredGames = [...filteredGames].sort((a, b) => b.rating - a.rating);
+      }
+
+      if (currentFilters.alphabetic === "asc") {
+        filteredGames = [...filteredGames].sort((gameA, gameB) => {
+          const nameA = gameA.name.toLowerCase();
+          const nameB = gameB.name.toLowerCase();
+          if (nameA < nameB) return -1;
+          if (nameA > nameB) return 1;
+          return 0;
+        });
+      } else if (currentFilters.alphabetic === "desc") {
+        filteredGames = [...filteredGames].sort((gameA, gameB) => {
+          const nameA = gameA.name.toLowerCase();
+          const nameB = gameB.name.toLowerCase();
+          if (nameA < nameB) return 1;
+          if (nameA > nameB) return -1;
+          return 0;
+        });
+      }
+
+      if (currentFilters.genre !== "none") {
+        filteredGames = filteredGames.filter((game) =>
+          game.genres.some((genre) => genre.name === currentFilters.genre)
+        );
+      }
+
+      if (currentFilters.origin !== "none") {
+        filteredGames = filteredGames.filter(
+          (game) => game.origin === currentFilters.origin
+        );
+      }
       return {
         ...state,
         filters: filteredGames,

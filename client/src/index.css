@@ -4,8 +4,69 @@ body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Rajdhani', sans-serif;
-  background-color: #12122a;
+  background-color: var(--bg-primary);
+}
+@font-face {
+  font-family: gamer;
+  src: url('./Assets/Acients.ttf') format('truetype');
 }
 
+:root{
+  /* fuentes */
+  --title: gamer;
+  --text:'Rajdhani', sans-serif;
 
+  /* colores */
+  --primary: white;
+  --secondary:rgb(193, 39, 198);
+  --tertiary: #12122a;
+
+
+  /* colores de fondo */
+  --bg-opac:rgba(0, 0, 0, 0.173);
+  --bg-primary:#12122a;
+  --bg-secondary:rgba(255, 255, 255, 0.1);
+  
+}
+/* Webkit (Chrome, Safari, Opera) */
+::-webkit-scrollbar {
+  width: 5px;
+  background-color: var(--bg-opac);
+  border-radius: 15px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--bg-secondary);
+  border-radius: 15px;
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--bg-secondary) var(--bg-opac);
+}
+
+*::-webkit-scrollbar {
+  width: 5px;
+  background-color: var(--bg-opac);
+  border-radius: 15px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: var(--bg-secondary);
+  border-radius: 15px;
+}
+
+*::-moz-scrollbar {
+  width: 5px;
+  background-color: var(--bg-opac);
+  border: 0;
+  border-radius: 15px;
+  border-image:
+    linear-gradient(to bottom, var(--bg-opac), var(--bg-secondary)) 1 100%;
+}
+
+*::-moz-scrollbar-thumb {
+  background-color: var(--bg-secondary);
+  border-radius: 15px;
+}

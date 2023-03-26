@@ -1,5 +1,55 @@
-.card{
-    width: 200px;
-    height: 250px;
-    background-color: white;
+
+
+.card {
+    width: 250px;
+    height: 200px;
+    margin: 10px;
+    position: relative;
+    text-align: center;
+    background-color: var(--bg-opac);
+    border-radius: 10px;
+    border-bottom: 1px solid var(--primary);
+    transition: 0.4s;
+}
+
+.card h2 {
+    font-size: 15px;
+    font-weight: 300;
+    opacity: 1;
+}
+
+.card:hover .card-genres {
+    border-radius: 10px;
+    opacity: 0.8;
+}
+
+.card-genres {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    justify-content: center;
+    align-items: center;
+    transition: 0.4s;
+}
+
+.card-genres p {
+
+    color: var(--primary);
+    font-size: 14px;
+    margin: 5px;
+}
+
+.card img {
+    border-radius: 10px 10px 0px 0px;
+}
+
+.card-title {
+    font-size: 20px;
+    font-weight: 300;
+    margin: 10px;
+    transition: 0.4s;
 }

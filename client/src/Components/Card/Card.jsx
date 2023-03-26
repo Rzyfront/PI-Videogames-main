@@ -1,14 +1,20 @@
 import React from "react";
+import "./Card.css";
+import { Link } from "react-router-dom";
 
-const Card = ({ key, name, image, genres }) => {
+const Card = ({ id, name, image, genres }) => {
   return (
-    <div className="card" key={key}>
-      <img src={image} alt={name} />
-      <h2>{name}</h2>
-      {genres.map((genre) => {
-        return <p>genre</p>;
-      })}
-    </div>
+    <Link to={`/detail/${id}`} key={id}>
+      <div className="card" key={id}>
+        <div className="card-genres">
+          {genres.map((genre) => {
+            return <p key={genre.name}>{genre.name}</p>;
+          })}
+        </div>
+        <img src={image} alt={name} width="250px" height="160" />
+        <h2 className="card-title">{name}</h2>
+      </div>
+    </Link>
   );
 };
 

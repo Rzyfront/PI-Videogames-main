@@ -1,0 +1,36 @@
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.spinner-container {
+    width: 100px;
+    height: 100px;
+}
+
+.spinner {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+
+    /* Cambiar el grosor del borde aquí */
+    border-width: 10px;
+    border-style: solid;
+
+    /* Cambiar los colores del borde aquí */
+    border-top-color: var(--primary);
+    border-right-color: transparent;
+    border-bottom-color: var(--primary);
+    border-left-color: transparent;
+
+    /* Cambiar la duración y el tipo de animación aquí */
+    animation-name: spin;
+    animation-duration: .8s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}

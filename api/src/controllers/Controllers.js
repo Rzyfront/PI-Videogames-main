@@ -22,7 +22,9 @@ const getVideogames = async () => {
       name: game.name,
       background_image: game.background_image,
       genres: game.genres,
+      platforms: game.platforms,
       origin: "api",
+      rating: game.rating,
     };
   });
 
@@ -44,7 +46,9 @@ const getVideogames = async () => {
       name: game.name,
       background_image: game.background_image,
       genres: game.genres,
+      platforms: game.platforms,
       origin: game.origin,
+      rating: game.rating,
     };
   });
 
@@ -157,6 +161,8 @@ const getGameByName = async (name) => {
       background_image: game.background_image,
       genres: game.genres,
       origin: game.origin,
+      rating: game.rating,
+      origin: db,
     };
   });
 
@@ -169,6 +175,7 @@ const getGameByName = async (name) => {
       name: game.name,
       background_image: game.background_image,
       genres: game.genres,
+      rating: game.rating,
       origin: "api",
     };
   });

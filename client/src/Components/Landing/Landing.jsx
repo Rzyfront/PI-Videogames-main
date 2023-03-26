@@ -43,7 +43,7 @@ const Landing = () => {
               DESCUBRE LA MEJOR WEB GAMING
             </h2>
             <div className="btn">
-              <NavLink to={"/Home"} className="navlink">
+              <NavLink to={"/home"} className="navlink">
                 EMPEZAR
               </NavLink>
             </div>
