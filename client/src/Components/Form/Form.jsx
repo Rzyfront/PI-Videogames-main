@@ -9,6 +9,7 @@ import {
 } from "../../Redux/actions";
 import { NavLink } from "react-router-dom";
 import { validate } from "./validate";
+import { Loading } from "../Loading/Loading";
 
 const Form = () => {
   const dispatch = useDispatch();
@@ -21,8 +22,10 @@ const Form = () => {
       )
       .flat()
   );
+  const [create, setCreate] = useState(false);
   let uniquePlatforms = [...new Set(platforms)];
   const genres = useSelector((state) => state.genres);
+  const [loading, setLoading] = useState(true);
   const [empy, setEmpy] = useState(false);
   const [inputs, setInputs] = useState({
     name: "",
@@ -39,6 +42,9 @@ const Form = () => {
   useEffect(() => {
     !platforms || dispatch(getAllVideogames());
     dispatch(getGenres());
+    setTimeout(() => {
+      setLoading(false);
+    }, 500);
   }, []);
 
   const handleSubmit = (e) => {
@@ -53,6 +59,7 @@ const Form = () => {
         inputs.image !== "" &&
         inputs.genres.length > 0
       ) {
+        setLoading(true);
         let formatPlatforms = inputs.platforms.map((p) => {
           return {
             platform: {
@@ -76,7 +83,6 @@ const Form = () => {
           rating: Number(inputs.rating),
           genres: formatGenres,
         };
-        console.log(gamePost);
         dispatch(postVideogames(gamePost));
         setInputs({
           name: "",
@@ -87,6 +93,10 @@ const Form = () => {
           image: "",
           genres: [],
         });
+        setTimeout(() => {
+          setLoading(false);
+          setCreate(true);
+        }, 500);
       } else {
         setEmpy(true);
       }
@@ -131,7 +141,7 @@ const Form = () => {
     });
   };
 
-  const empymessage = () => {
+  const empyMessage = () => {
     return (
       <div className="empy">
         <div className="empyMessage">
@@ -142,9 +152,22 @@ const Form = () => {
     );
   };
 
+  const createMessage = () => {
+    return (
+      <div className="create">
+        <div className="createMessage">
+          <h4>Juego Creado Exitosamente</h4>
+          <NavLink to={"/home"}>
+            <button onClick={() => setCreate(false)}>OK</button>
+          </NavLink>
+        </div>
+      </div>
+    );
+  };
   return (
     <div className="From">
-      {empy && empymessage()}
+      {empy && empyMessage()}
+      {create && createMessage()}
       <section>
         <div className="color"></div>
         <div className="color"></div>
@@ -156,133 +179,137 @@ const Form = () => {
           <div className="square" style={{ "--i": "3" }}></div>
           <div className="square" style={{ "--i": "4" }}></div>
           <div className="container">
-            <form id="formcreate" onSubmit={handleSubmit}>
-              <h2 className="title">Crea tu juego</h2>
+            {loading ? (
+              <Loading />
+            ) : (
+              <form id="formcreate" onSubmit={handleSubmit}>
+                <h2 className="title">Crea tu juego</h2>
 
-              <div className="inputs">
-                <label
-                  htmlFor="name"
-                  style={{ color: errors.name ? "#f00" : "" }}
-                >
-                  {errors.name && `Nombre ${errors.name}*`}
-                </label>
-                <input
-                  type="text"
-                  name="name"
-                  placeholder="Ingresa el nombre del juego:"
-                  value={inputs.name}
-                  onChange={handleInputChange}
-                />
+                <div className="inputs">
+                  <label
+                    htmlFor="name"
+                    style={{ color: errors.name ? "#f00" : "" }}
+                  >
+                    {errors.name && `Nombre ${errors.name}*`}
+                  </label>
+                  <input
+                    type="text"
+                    name="name"
+                    placeholder="Ingresa el nombre del juego:"
+                    value={inputs.name}
+                    onChange={handleInputChange}
+                  />
 
-                <select
-                  name="platforms"
-                  id="platforms"
-                  value={inputs.platforms[0]}
-                  onChange={handleSelectorChange}
-                >
-                  <option key="defaul">Selecciona las plataformas:</option>
-                  {inputs.platforms.length < 9 &&
-                    uniquePlatforms
-                      .filter(
-                        (platform) => !inputs.platforms.includes(platform)
-                      )
-                      .map((platform, index) => {
-                        return <option key={index}>{platform}</option>;
-                      })}
-                </select>
-                <div className="platformsTarget">
-                  {inputs?.platforms?.map((platform, index) => {
-                    return (
-                      <div key={index}>
-                        <h3 onClick={() => removePlatform(platform)}>x</h3>
-                        <h4>{platform} </h4>
-                      </div>
-                    );
-                  })}
-                </div>
-
-                <select
-                  name="genres"
-                  id="genres"
-                  value={inputs.genres[0]}
-                  onChange={handleSelectorChange}
-                >
-                  <option key="defaul">Selecciona los generos:</option>
-                  {inputs.genres.length < 4 &&
-                    genres
-                      .filter((genre) => !inputs.genres.includes(genre.name))
-                      .map((genre, index) => {
-                        return <option key={index}>{genre.name}</option>;
-                      })}
-                </select>
-                <div className="genresTarget">
-                  {inputs.genres &&
-                    inputs?.genres?.map((genre, index) => {
+                  <select
+                    name="platforms"
+                    id="platforms"
+                    value={inputs.platforms[0]}
+                    onChange={handleSelectorChange}
+                  >
+                    <option key="defaul">Selecciona las plataformas:</option>
+                    {inputs.platforms.length < 9 &&
+                      uniquePlatforms
+                        .filter(
+                          (platform) => !inputs.platforms.includes(platform)
+                        )
+                        .map((platform, index) => {
+                          return <option key={index}>{platform}</option>;
+                        })}
+                  </select>
+                  <div className="platformsTarget">
+                    {inputs?.platforms?.map((platform, index) => {
                       return (
                         <div key={index}>
-                          <h3 onClick={() => removeGenre(genre)}>x</h3>
-                          <h4>{genre} </h4>
+                          <h3 onClick={() => removePlatform(platform)}>x</h3>
+                          <h4>{platform} </h4>
                         </div>
                       );
                     })}
-                </div>
-                <label
-                  htmlFor="image"
-                  style={{ color: errors.image ? "#f00" : "" }}
-                >
-                  {errors.image && `Imagen ${errors.image}*`}
-                </label>
+                  </div>
 
-                <input
-                  type="text"
-                  name="image"
-                  placeholder="Ingresa URL de la imagen:"
-                  value={inputs.image}
-                  onChange={handleInputChange}
-                />
+                  <select
+                    name="genres"
+                    id="genres"
+                    value={inputs.genres[0]}
+                    onChange={handleSelectorChange}
+                  >
+                    <option key="defaul">Selecciona los generos:</option>
+                    {inputs.genres.length < 4 &&
+                      genres
+                        .filter((genre) => !inputs.genres.includes(genre.name))
+                        .map((genre, index) => {
+                          return <option key={index}>{genre.name}</option>;
+                        })}
+                  </select>
+                  <div className="genresTarget">
+                    {inputs.genres &&
+                      inputs?.genres?.map((genre, index) => {
+                        return (
+                          <div key={index}>
+                            <h3 onClick={() => removeGenre(genre)}>x</h3>
+                            <h4>{genre} </h4>
+                          </div>
+                        );
+                      })}
+                  </div>
+                  <label
+                    htmlFor="image"
+                    style={{ color: errors.image ? "#f00" : "" }}
+                  >
+                    {errors.image && `Imagen ${errors.image}*`}
+                  </label>
 
-                <input
-                  type="date"
-                  name="released"
-                  placeholder="date"
-                  value={inputs.released}
-                  onChange={handleInputChange}
-                />
-                <div className="range">
                   <input
-                    type="range"
-                    name="rating"
-                    min="0"
-                    max="100"
-                    step="0.1"
-                    value={inputs.rating}
+                    type="text"
+                    name="image"
+                    placeholder="Ingresa URL de la imagen:"
+                    value={inputs.image}
                     onChange={handleInputChange}
                   />
-                  <label htmlFor="range">Rating: {inputs.rating}</label>
+
+                  <input
+                    type="date"
+                    name="released"
+                    placeholder="date"
+                    value={inputs.released}
+                    onChange={handleInputChange}
+                  />
+                  <div className="range">
+                    <input
+                      type="range"
+                      name="rating"
+                      min="0"
+                      max="5"
+                      step="0.1"
+                      value={inputs.rating}
+                      onChange={handleInputChange}
+                    />
+                    <label htmlFor="range">Rating: {inputs.rating}</label>
+                  </div>
+
+                  <label
+                    htmlFor="textarea"
+                    style={{ color: errors.description ? "#f00" : "" }}
+                  >
+                    {errors.description && `Descripcion ${errors.description}*`}
+                  </label>
+                  <textarea
+                    placeholder="Ingresa una description de tu juego aquí"
+                    name="description"
+                    rows="5"
+                    value={inputs.description}
+                    onChange={handleInputChange}
+                  ></textarea>
                 </div>
 
-                <label
-                  htmlFor="textarea"
-                  style={{ color: errors.description ? "#f00" : "" }}
-                >
-                  {errors.description && `Descripcion ${errors.description}*`}
-                </label>
-                <textarea
-                  placeholder="Ingresa una description de tu juego aquí"
-                  name="description"
-                  rows="5"
-                  value={inputs.description}
-                  onChange={handleInputChange}
-                ></textarea>
-              </div>
-
-              <div className="botones">
-                <NavLink to={"/home"}>
-                  <button>Volver</button>
-                </NavLink>
-                <button type="submit">Crear Juego +</button>
-              </div>
-            </form>
+                <div className="botones">
+                  <NavLink to={"/home"}>
+                    <button>Volver</button>
+                  </NavLink>
+                  <button type="submit">Crear Juego +</button>
+                </div>
+              </form>
+            )}
           </div>
         </div>
       </section>

@@ -1,6 +1,6 @@
 export function validate(inputs) {
   const error = {};
-  const notSimbols = /^[a-zA-ZñÑ][a-zA-ZñÑ\s]*$/;
+  const notSimbols = /^[a-zA-ZñÑ0-9\s][a-zA-ZñÑ0-9\s]*$/;
   const notSimbolsPuations =
     /^[a-zA-ZñÑáéíóúÁÉÍÓÚ][a-zA-ZñÑáéíóúÁÉÍÓÚ0-9\s.,;:¡!¿?'-]*$/;
   const onlyUrl = /^(ftp|http|https):\/\/[^ "]+$/;
@@ -13,8 +13,8 @@ export function validate(inputs) {
     error.image = "URL no valida";
   if (inputs.image.length > 300) error.image = "URL excede max 300 caracteres";
 
-  if (inputs.description.length > 500)
-    error.description = "supera el limite de 500 caracteres";
+  if (inputs.description.length > 700)
+    error.description = "supera el limite de 700 caracteres";
 
   if (inputs.description !== "" && !notSimbolsPuations.test(inputs.description))
     error.description = "no puede contener simbolos";

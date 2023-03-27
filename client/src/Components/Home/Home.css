@@ -161,6 +161,10 @@ section .container {
     
 }
 
+.links input:hover{
+box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.327);
+}
+
 .links button{
     width: 100px;
     height: 30px;
@@ -173,6 +177,11 @@ section .container {
     cursor: pointer;
     font-family: var(--text);
     font-weight: 600;
+}
+
+.links button:hover {
+    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.327);
+    background-color: var(--secondary);
 }
 
 .lupita{
@@ -205,6 +214,11 @@ section .container {
         padding-left: 10px 0 0 10px;
 }
 
+.filters button:hover {
+    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.327);
+    background-color: var(--secondary);
+}
+
 .filters select{
     padding-left: 15px;
     padding-right: 30px;
@@ -221,6 +235,10 @@ section .container {
     border-radius: 6px 6px 6px 6px;
     text-align: left;
     font-family: var(--text);
+}
+
+.filters select:hover {
+box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.327);
 }
 
 .filters select option{

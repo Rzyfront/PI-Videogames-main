@@ -7,7 +7,7 @@ const Card = ({ id, name, image, genres }) => {
     <Link to={`/detail/${id}`} key={id}>
       <div className="card" key={id}>
         <div className="card-genres">
-          {genres.map((genre) => {
+          {genres?.map((genre) => {
             return <p key={genre.name}>{genre.name}</p>;
           })}
         </div>

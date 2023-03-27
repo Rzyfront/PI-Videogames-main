@@ -8,7 +8,7 @@ import {
   getAllVideogames,
   getGenres,
   getVideogameByName,
-  reFilter,
+  Filter,
 } from "../../Redux/actions.js";
 import { NavLink } from "react-router-dom";
 import Card from "../Card/Card";
@@ -49,7 +49,7 @@ const Home = () => {
   }, [Genres]);
 
   useEffect(() => {
-    dispatch(reFilter(filtros));
+    dispatch(Filter(filtros));
   }, [filtros]);
 
   const handlePageChange = (increment) => {
@@ -142,13 +142,12 @@ const Home = () => {
         setLoading(false);
       }, 400);
 
-      dispatch(reFilter(filtros));
+      dispatch(Filter(filtros));
     }
   };
 
   const inputHandler = (event) => {
     setName(event.target.value);
-    console.log(event.target.value);
   };
 
   const handleSearch = () => {
@@ -226,7 +225,7 @@ const Home = () => {
                     name="genre"
                     value={filtros.genre}
                   >
-                    <option value="All">Ordena por generos</option>
+                    <option value="none">Ordena por generos</option>
                     {Genres?.map((el, index) => (
                       <option key={index} value={el.name}>
                         {el.name}
