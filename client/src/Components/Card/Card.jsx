@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 const Card = ({ id, name, image, genres }) => {
   return (
-    <Link to={`/detail/${id}`} key={id}>
+    <Link to={`/detail/${id}`} key={id} className="Card">
       <div className="card" key={id}>
         <div className="card-genres">
           {genres?.map((genre) => {

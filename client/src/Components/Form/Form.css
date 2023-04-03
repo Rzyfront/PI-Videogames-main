@@ -17,7 +17,7 @@ body {
     transition: 0.4s;
 }
 
-section .container:hover .title {
+section .containerform:hover .title {
     opacity: 1;
 }
 
@@ -120,10 +120,10 @@ section .box .square:nth-child(5) {
     height: 60px;
 }
 
-section .container {
+section .containerform {
     position: relative;
     width: 950px;
-    height: 600px;
+    height: 650px;
     background-color: rgba(255, 255, 255, 0.1);
     border-radius: 10px;
     display: flex;
@@ -131,6 +131,31 @@ section .container {
     backdrop-filter: blur(5px);
     box-shadow: 0 25px 45px rgba(0, 0, 0, 0.1);
     align-items: center;
+}
+
+.containerform .logos {
+    display: flex;
+    padding: 10px;
+    gap: 10px;
+}
+
+.containerform .logos:hover {
+    filter: drop-shadow(0px 0px 8px rgba(0, 0, 0, 0.642))
+}
+
+.containerform .logos img{
+    width: 50px;
+}
+
+.containerform .logos h2 {
+    font-size: 50px;
+    font-family: var(--title);
+    opacity: 1;
+    color: var(--primary);
+}
+
+.formCreate .title{
+    font-size: 90px;
 }
 
 .empy {
@@ -241,7 +266,7 @@ section .container {
     background-color: rgb(121, 121, 121);
 }
 
-#formcreate{
+.formCreate{
     position: relative;
     z-index: 1;
     display: flex;
@@ -341,7 +366,8 @@ section .container {
 }
 
 .botones{
-    margin-top: 20px;
+    display: flex;
+    margin-top: 0px;
 
 }
 .botones button {
@@ -358,7 +384,7 @@ section .container {
     cursor: pointer;
     font-family:var(--text);
     font-weight: 600;
-    padding-left: 10px 0 0 10px;
+    padding: 0 10px 0 10px;
     transition: 0.4s;
 }
 
@@ -499,4 +525,113 @@ section .container {
     height: 3px;
     border-radius: 5px;
     background: #ddd;
+}
+
+@media screen and (max-width:950px) {
+
+    section .containerform {
+        width: 750px;
+    }
+
+}
+
+@media screen and (max-width:750px) {
+
+
+    section .containerform {
+        width: 550px;
+        height: 660px;
+    }
+
+    .containerform .title{
+        font-size: 70px;
+    }
+
+    .inputs input{
+        width: 70%;
+    }
+
+    .inputs select{
+        width: 70%;
+    }
+
+    .inputs .range{
+        width: 70%;
+    }
+
+    .inputs textarea{
+        width: 70%;
+    }
+
+}
+
+@media screen and (max-width:550px) {
+
+section .containerform {
+        width: 350px;
+        height: 660px;
+    }
+
+    .containerform .title {
+        font-size: 50px;
+    }
+
+    .inputs input {
+        width: 70%;
+        font-size: 15px;
+    }
+
+    .inputs select {
+        width: 70%;
+        font-size: 15px;
+    }
+
+    .inputs .range {
+        width: 70%;
+        font-size: 15px;
+    }
+
+    .inputs .range label{
+        padding-top: 5px;
+        font-size: 15px;
+        width: 45%;
+    }
+
+    .inputs .range input{
+        width: 55%;
+    }
+
+    .inputs textarea {
+        width: 70%;
+        font-size: 15px;
+    }
+
+    .inputs{
+        width: 100%;
+    }
+
+    .formCreate .botones{
+        flex-direction: column-reverse;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+    }
+
+        .containerform .logos {
+            display: flex;
+            padding-top: 20px;
+            gap: 10px;
+        }
+    
+    
+        .containerform .logos img {
+            width: 50px;
+        }
+    
+        .containerform .logos h2 {
+            font-size: 50px;
+            font-family: var(--title);
+            opacity: 1;
+            color: var(--primary);
+        }
 }

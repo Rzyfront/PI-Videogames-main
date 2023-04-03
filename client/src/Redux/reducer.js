@@ -5,13 +5,18 @@ import {
   GET_GENRES,
   POST_VIDEOGAME,
   FILTER,
+  ERROR_SERVER,
 } from "./actiontypes";
 
 const initialState = {
   allVideogames: [],
-  filters: [],
+  gamesShown: [],
   gameDetails: {},
   genres: [],
+  errorServer: {
+    errorStatus: false,
+    errorMessage: "",
+  },
 };
 
 const rootReducer = (state = initialState, { type, payload }) => {
@@ -20,13 +25,13 @@ const rootReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         allVideogames: payload,
-        filters: payload,
+        gamesShown: payload,
       };
     case GET_VIDEOGAME_BY_NAME:
       return {
         ...state,
         allVideogames: payload,
-        filters: payload,
+        gamesShown: payload,
       };
     case GET_GAME_DETAILS:
       return {
@@ -75,7 +80,7 @@ const rootReducer = (state = initialState, { type, payload }) => {
       }
       return {
         ...state,
-        filters: filteredGames,
+        gamesShown: filteredGames,
       };
 
     case GET_GENRES:
@@ -87,6 +92,14 @@ const rootReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         allVideogames: [...state.allVideogames, payload],
+      };
+    case ERROR_SERVER:
+      return {
+        ...state,
+        errorServer: {
+          errorStatus: true,
+          errorMessage: payload,
+        },
       };
     default:
       return state;

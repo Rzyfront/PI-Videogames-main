@@ -3,22 +3,22 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getGameDetails } from "../../Redux/actions";
-import { Loading } from "../Loading/Loading";
+import { Loading } from "../Loading/Loading.jsx";
 import { NavLink } from "react-router-dom";
 import "./Detail.css";
 
 const Detail = () => {
   const [loading, setLoading] = useState(true);
-  let detail = useSelector((state) => state.gameDetails);
+  const detail = useSelector((state) => state.gameDetails);
   const dispatch = useDispatch();
   const { id } = useParams();
-
+  //Setear detalle en vacio cuando desmonte
   useEffect(() => {
     dispatch(getGameDetails(id));
     setTimeout(() => {
       setLoading(false);
     }, 2000);
-  }, []);
+  }, [dispatch, id]);
 
   const detailCard = (detail) => {
     const gamePlatform = detail.platforms?.map(
@@ -61,7 +61,7 @@ const Detail = () => {
     );
   };
   return (
-    <div>
+    <div className="Detail">
       <section>
         <div className="color"></div>
         <div className="color"></div>
@@ -72,7 +72,7 @@ const Detail = () => {
           <div className="square" style={{ "--i": "2" }}></div>
           <div className="square" style={{ "--i": "3" }}></div>
           <div className="square" style={{ "--i": "4" }}></div>
-          <div className="container">
+          <div className="containerdetail">
             <div className="volver">
               <NavLink to={"/home"}>
                 <button>Volver</button>

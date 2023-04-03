@@ -5,16 +5,24 @@ import {
   GET_GENRES,
   POST_VIDEOGAME,
   FILTER,
+  ERROR_SERVER,
 } from "./actiontypes";
 import axios from "axios";
-
+//Manejar errores de los catch
 export function getAllVideogames() {
   return async function (dispatch) {
-    const result = await axios("http://localhost:3001/videogames");
-    return dispatch({
-      type: GET_ALL_VIDEOGAMES,
-      payload: result.data,
-    });
+    try {
+      const result = await axios("http://localhost:3001/videogames");
+      return dispatch({
+        type: GET_ALL_VIDEOGAMES,
+        payload: result.data,
+      });
+    } catch (error) {
+      return dispatch({
+        type: ERROR_SERVER,
+        payload: error.message,
+      });
+    }
   };
 }
 
@@ -29,7 +37,10 @@ export function getVideogameByName(name) {
         payload: result.data,
       });
     } catch (error) {
-      console.log(error.message);
+      return dispatch({
+        type: ERROR_SERVER,
+        payload: error.message,
+      });
     }
   };
 }
@@ -43,7 +54,10 @@ export function getGameDetails(id) {
         payload: result.data,
       });
     } catch (error) {
-      console.log(error.message);
+      return dispatch({
+        type: ERROR_SERVER,
+        payload: error.message,
+      });
     }
   };
 }
@@ -57,7 +71,10 @@ export function getGenres() {
         payload: result.data,
       });
     } catch (error) {
-      console.log(error.message);
+      return dispatch({
+        type: ERROR_SERVER,
+        payload: error.message,
+      });
     }
   };
 }
@@ -72,7 +89,10 @@ export function postVideogames(dataGame) {
       //agregalo a los juegos que se muestran en pantalla
       dispatch({ type: POST_VIDEOGAME, payload: result.data });
     } catch (error) {
-      console.log(error.message);
+      return dispatch({
+        type: ERROR_SERVER,
+        payload: error.message,
+      });
     }
   };
 }

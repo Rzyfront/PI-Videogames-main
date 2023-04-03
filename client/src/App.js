@@ -4,7 +4,7 @@ import { Landing, Home, Form, Detail } from "./Components/Components.js";
 
 function App() {
   return (
-    <div className="container">
+    <div className="container App">
       <Routes>
         <Route path="/create" element={<Form />} />
         <Route path="/detail/:id" element={<Detail />} />

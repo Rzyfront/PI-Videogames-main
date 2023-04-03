@@ -1,28 +1,31 @@
 import React from "react";
-// import { IoFilterCircleOutline, IoFilterCircleSharp } from "react-icons/io5";
-import { AiOutlineArrowLeft, AiOutlineArrowRight } from "react-icons/ai";
-import { BiSearchAlt } from "react-icons/bi";
+import { Loading } from "../Loading/Loading.jsx";
+import MenuIco from "../../Assets/MenuIco.svg";
+import RigthIco from "../../Assets/RigthIco.svg";
+import LeftIco from "../../Assets/LeftIco.svg";
+import SearchIco from "../../Assets/SearchIco.svg";
+import Refresh from "../../Assets/Refresh.svg";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { NavLink } from "react-router-dom";
+import Card from "../Card/Card.jsx";
+import logo from "../../Assets/Nexus.svg";
 import {
   getAllVideogames,
   getGenres,
   getVideogameByName,
   Filter,
 } from "../../Redux/actions.js";
-import { NavLink } from "react-router-dom";
-import Card from "../Card/Card";
 import "./Home.css";
-import { Loading } from "../Loading/Loading";
 
 const Home = () => {
-  // const [toggleFilter, setToggleFilter] = useState();
-  const Genres = useSelector((state) => state.genres);
   const dispatch = useDispatch();
-  const Filters = useSelector((state) => state.filters);
+  const { genres } = useSelector((state) => state);
+  const { gamesShown } = useSelector((state) => state);
   const gamesPerPage = 15;
-  const pagesCount = Math.ceil(Filters.length / gamesPerPage);
-  const [filtros, setFiltros] = useState({
+  const pagesCount = Math.ceil(gamesShown.length / gamesPerPage);
+  const [toggleMenu, setToggleMenu] = useState(false);
+  const [filters, setFilters] = useState({
     alphabetic: "none",
     rating: "none",
     origin: "none",
@@ -32,25 +35,23 @@ const Home = () => {
   const [activePage, setActivePage] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
   const [name, setName] = useState("");
-
   useEffect(() => {
-    if (!Filters || Filters.length === 0) {
+    if (!gamesShown || gamesShown.length === 0) {
       dispatch(getAllVideogames());
-    }
-    setTimeout(() => {
+    } else {
       setLoading(false);
-    }, 3000);
-  }, []);
+    }
+  }, [gamesShown, dispatch]);
 
   useEffect(() => {
-    if (!Genres || Genres.length === 0) {
+    if (!genres || genres.length === 0) {
       dispatch(getGenres());
     }
-  }, [Genres]);
+  }, [genres, dispatch]);
 
   useEffect(() => {
-    dispatch(Filter(filtros));
-  }, [filtros]);
+    dispatch(Filter(filters));
+  }, [filters, dispatch]);
 
   const handlePageChange = (increment) => {
     const nextPage = currentPage + increment;
@@ -64,7 +65,7 @@ const Home = () => {
     }
   };
 
-  const gamesToRender = Filters.slice(
+  let gamesToRender = gamesShown.slice(
     currentPage * gamesPerPage,
     (currentPage + 1) * gamesPerPage
   );
@@ -72,12 +73,18 @@ const Home = () => {
   const renderNavigationButtons = () => {
     return (
       <div className="pag-container">
-        <AiOutlineArrowLeft
+        <img
+          src={LeftIco}
+          alt="Prev"
+          width="30px"
           className="pag-btn arrows"
           onClick={() => handlePageChange(-1)}
         />
         {renderPageNumbers()}
-        <AiOutlineArrowRight
+        <img
+          src={RigthIco}
+          alt="Next"
+          width="30px"
           className="pag-btn arrows"
           onClick={() => handlePageChange(1)}
         />
@@ -115,7 +122,7 @@ const Home = () => {
   };
 
   const renderGames = () => {
-    return gamesToRender.map((game) => {
+    return gamesToRender?.map((game) => {
       return (
         <Card
           key={game.id}
@@ -128,21 +135,82 @@ const Home = () => {
     });
   };
 
+  const movilMenu = () => {
+    return (
+      <div className="movilMenu">
+        <div className="selectoresMovil">
+          <select
+            onChange={(e) => handleFilters(e)}
+            name="alphabetic"
+            value={filters.alphabetic}
+          >
+            <option value="none">Alfabeticamente</option>
+            <option value="asc"> A-Z </option>
+            <option value="desc"> Z-A </option>
+          </select>
+          <select
+            onChange={(e) => handleFilters(e)}
+            name="rating"
+            value={filters.rating}
+          >
+            <option value="none">Ordena por rating</option>
+            <option value="desc">Mas populares</option>
+            <option value="asc">Menos populares</option>
+          </select>
+          <select
+            onChange={(e) => handleFilters(e)}
+            name="genre"
+            value={filters.genre}
+          >
+            <option value="none">Ordena por generos</option>
+            {genres?.map((el, index) => (
+              <option key={index} value={el.name}>
+                {el.name}
+              </option>
+            ))}
+          </select>
+          <select
+            onChange={(e) => handleFilters(e)}
+            name="origin"
+            value={filters.origin}
+          >
+            <option value="none">Origen</option>
+            <option value="none">All</option>
+            <option value="db">Juegos Creados</option>
+            <option value="api">Juegos API</option>
+          </select>
+        </div>
+      </div>
+    );
+  };
+
+  const restaurarFilter = () => {
+    dispatch(getAllVideogames());
+    setFilters({
+      alphabetic: "none",
+      rating: "none",
+      origin: "none",
+      genre: "none",
+    });
+    setLoading(true);
+    setCurrentPage(0);
+    setActivePage(0);
+    setTimeout(() => {
+      setLoading(false);
+    }, 3000);
+  };
+
   const handleFilters = (event) => {
     const { value, name } = event.target;
-    if (filtros[name] !== value) {
-      setFiltros({
-        ...filtros,
-        [name]: value,
-      });
+    if (filters[name] !== value) {
+      setFilters({ ...filters, [name]: value });
+      dispatch(Filter(filters));
       setLoading(true);
       setCurrentPage(0);
       setActivePage(0);
       setTimeout(() => {
         setLoading(false);
-      }, 400);
-
-      dispatch(Filter(filtros));
+      }, 1000);
     }
   };
 
@@ -158,7 +226,7 @@ const Home = () => {
       setActivePage(0);
       setTimeout(() => {
         setLoading(false);
-      }, 1000);
+      }, 3000);
     }
   };
   return (
@@ -174,38 +242,42 @@ const Home = () => {
             <div className="square" style={{ "--i": "2" }}></div>
             <div className="square" style={{ "--i": "3" }}></div>
             <div className="square" style={{ "--i": "4" }}></div>
-            <div className="container">
+            <div className="containerhome">
               <div className="nav">
-                <div className="links">
-                  <h2>NEXUS</h2>
-                  <input
-                    type="text"
-                    name="search"
-                    placeholder="Busca tus juegos favoritos aqui..."
-                    onChange={inputHandler}
-                  />
-                  <button onClick={handleSearch}>
-                    Buscar
-                    <BiSearchAlt className="lupita" />
-                  </button>
+                <div className="header">
+                  <div className="logos">
+                    <img src={logo} alt="Nexus_Logo" width="35px" />
+                    <h2>NEXUS</h2>
+                  </div>
+                  <div className="inputButton">
+                    <input
+                      type="text"
+                      name="search"
+                      placeholder="Busca tus juegos favoritos aqui..."
+                      onChange={inputHandler}
+                    />
+                    <button onClick={handleSearch}>
+                      Buscar
+                      <img src={SearchIco} alt="lupita" width="20px" />
+                    </button>
+                  </div>
                 </div>
               </div>
 
               <div className="filters">
-                <NavLink to={"/create"}>
-                  <button
-                    onClick={() => {
-                      dispatch(getVideogameByName());
-                    }}
-                  >
-                    Crear Juego +
+                <div className="buttons">
+                  <NavLink to={"/create"}>
+                    <button className="creategame">Crear Juego +</button>
+                  </NavLink>
+                  <button onClick={restaurarFilter} className="desearch">
+                    <img src={Refresh} alt="R" width="20" />
                   </button>
-                </NavLink>
+                </div>
                 <div className="selectores">
                   <select
                     onChange={(e) => handleFilters(e)}
                     name="alphabetic"
-                    value={filtros.alphabetic}
+                    value={filters.alphabetic}
                   >
                     <option value="none">Alfabeticamente</option>
                     <option value="asc"> A-Z </option>
@@ -214,7 +286,7 @@ const Home = () => {
                   <select
                     onChange={(e) => handleFilters(e)}
                     name="rating"
-                    value={filtros.rating}
+                    value={filters.rating}
                   >
                     <option value="none">Ordena por rating</option>
                     <option value="desc">Mas populares</option>
@@ -223,10 +295,10 @@ const Home = () => {
                   <select
                     onChange={(e) => handleFilters(e)}
                     name="genre"
-                    value={filtros.genre}
+                    value={filters.genre}
                   >
                     <option value="none">Ordena por generos</option>
-                    {Genres?.map((el, index) => (
+                    {genres?.map((el, index) => (
                       <option key={index} value={el.name}>
                         {el.name}
                       </option>
@@ -235,7 +307,7 @@ const Home = () => {
                   <select
                     onChange={(e) => handleFilters(e)}
                     name="origin"
-                    value={filtros.origin}
+                    value={filters.origin}
                   >
                     <option value="none">Origen</option>
                     <option value="none">All</option>
@@ -243,9 +315,27 @@ const Home = () => {
                     <option value="api">Juegos API</option>
                   </select>
                 </div>
+                {!toggleMenu ? (
+                  <img
+                    src={MenuIco}
+                    alt="Menu"
+                    width="20px"
+                    className="menuOff"
+                    onClick={() => {
+                      setToggleMenu(true);
+                    }}
+                  />
+                ) : (
+                  <img
+                    src={MenuIco}
+                    alt="Menu"
+                    width="20px"
+                    className="menuOn"
+                    onClick={() => setToggleMenu(false)}
+                  />
+                )}
+                {toggleMenu && movilMenu()}
               </div>
-
-              <div className="paginado">{renderNavigationButtons()}</div>
 
               <div className="cajon">
                 {loading ? (
@@ -256,6 +346,7 @@ const Home = () => {
                   renderGames()
                 )}
               </div>
+              <div className="paginado">{renderNavigationButtons()}</div>
             </div>
           </div>
         </section>

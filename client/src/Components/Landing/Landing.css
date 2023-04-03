@@ -2,9 +2,44 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    
 }
 
+.Landing{
+    position: relative;
+}
 
+.Landing .logos{
+    position: absolute;
+    display: flex;
+    padding: 10px;
+    gap: 10px;
+}
+
+.Landing .logos:hover {
+filter: drop-shadow(0px 0px 8px rgba(0, 0, 0, 0.642))
+}
+
+.Landing .logos h2{
+    font-size: 40px;
+    font-family: var(--title);
+    opacity: 1;
+    color: var(--primary);
+}
+
+.scale-up-center {
+    animation: scale-up-center 0.4s;
+}
+
+@keyframes scale-up-center {
+    0% {
+        transform: scale(.5)
+    }
+
+    100% {
+        transform: scale(1)
+    }
+}
 
 .content{
     display: flex;
@@ -37,6 +72,15 @@ h2.glitch {
 h2.glitch:hover {
     text-shadow: 0 0 1px white, 0 0 1px white, 0 0 1px white;
     animation: glitch 0.3s linear ;
+}
+
+.welcome{
+    width: 850px;
+    padding: 10px 0 10px 0;
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--primary);
+    font-family: var(--text);
 }
 
 @keyframes glitch {
@@ -236,4 +280,26 @@ letter-spacing: 3px;
     transition: all 0.3s ease-out 0.09s;
     font-family: var(--title);
     font-size: 20px;
+}
+
+
+@media screen and (max-width: 768px) {
+    .content h2{
+        font-size: 60px;
+    }
+    .containerLanding .btn {
+    width: 250px;
+    }
+    
+}
+
+
+@media screen and (max-width: 560px) {
+    .content h2 {
+        font-size: 40px;
+    }
+         .containerLanding .btn {
+             width: 200px;
+         }
+
 }

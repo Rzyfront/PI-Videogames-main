@@ -6,12 +6,17 @@ import { useDispatch } from "react-redux";
 import { getAllVideogames, getGenres } from "../../Redux/actions.js";
 import "./Landing.css";
 import { NavLink } from "react-router-dom";
+import logo from "../../Assets/Nexus.svg";
 
 const Landing = () => {
+  const [show, setShow] = useState(false);
   const dispatch = useDispatch();
+  //Verificar si ya el H2 es visible, si si se activa la claseName que le otorga las animaciones glitch
   const [isH2Visible, setIsH2Visible] = useState(false);
+  //Guarda el estado del h2 de forma no mutable
   const h2Ref = useRef(null);
   useEffect(() => {
+    setShow(true);
     const h2 = h2Ref.current;
     const position = h2.getBoundingClientRect().top;
     const screenPosition = window.innerHeight / 2;
@@ -25,12 +30,18 @@ const Landing = () => {
   });
 
   return (
-    <div className="Landing">
+    //Renderizo el video y lo pongo de fondo aplicando css
+    <div className={`Landing ${show ? "scale-up-center" : ""} `}>
+      <div className="logos">
+        <img src={logo} alt="Nexus_Logo" width="35px" />
+        <h2>NEXUS</h2>
+      </div>
       <video autoPlay loop muted>
         <source src={videoMp4} type="video/mp4" />
         <source src={videoWebm} type="video/webm" />
       </video>
 
+      {/* Agrego el titulo del lading y el botton de ingresar al website */}
       <div className="content">
         <div className="bodyLanding">
           <div className="containerLanding">
@@ -42,6 +53,11 @@ const Landing = () => {
             >
               DESCUBRE LA MEJOR WEB GAMING
             </h2>
+            <p className="welcome">
+              Nexus App es una biblioteca web de video juegos, busca y mira el
+              detalle de tus videojuegos favoritos, ademas puedes agregar nuevos
+              titulos a la biblioteca online
+            </p>
             <div className="btn">
               <NavLink to={"/home"} className="navlink">
                 EMPEZAR

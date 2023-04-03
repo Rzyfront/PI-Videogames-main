@@ -9,7 +9,8 @@ import {
 } from "../../Redux/actions";
 import { NavLink } from "react-router-dom";
 import { validate } from "./validate";
-import { Loading } from "../Loading/Loading";
+import { Loading } from "../Loading/Loading.jsx";
+import logo from "../../Assets/Nexus.svg";
 
 const Form = () => {
   const dispatch = useDispatch();
@@ -17,10 +18,10 @@ const Form = () => {
     state.allVideogames
       .map((game) =>
         Array.isArray(game.platforms)
-          ? game.platforms.map((p) => p.platform.name)
+          ? game.platforms?.map((p) => p?.platform?.name)
           : []
       )
-      .flat()
+      ?.flat()
   );
   const [create, setCreate] = useState(false);
   let uniquePlatforms = [...new Set(platforms)];
@@ -39,6 +40,7 @@ const Form = () => {
 
   const [errors, setErrors] = useState({});
 
+  //Cuando manden nombre repetido no crear y dar el mensaje
   useEffect(() => {
     !platforms || dispatch(getAllVideogames());
     dispatch(getGenres());
@@ -178,11 +180,15 @@ const Form = () => {
           <div className="square" style={{ "--i": "2" }}></div>
           <div className="square" style={{ "--i": "3" }}></div>
           <div className="square" style={{ "--i": "4" }}></div>
-          <div className="container">
+          <div className="containerform">
+            <div className="logos">
+              <img src={logo} alt="Nexus_Logo" width="35px" />
+              <h2>NEXUS</h2>
+            </div>
             {loading ? (
               <Loading />
             ) : (
-              <form id="formcreate" onSubmit={handleSubmit}>
+              <form className="formCreate" onSubmit={handleSubmit}>
                 <h2 className="title">Crea tu juego</h2>
 
                 <div className="inputs">
