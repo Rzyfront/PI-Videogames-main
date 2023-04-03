@@ -21,12 +21,13 @@
 //INDEX DEL SERVER
 const server = require("./src/app.js");
 const { conn } = require("./src/db.js");
-
+require("dotenv").config();
+const { PORT } = process.env;
 // SINCRONIZACION CON LA BD
 // FALSE NO BORRA TABLAS
 // TRUE BORRA Y CREA NUEVAMENTE LAS TABLAS, SIRVE PARA DESARROLLO
 conn.sync({ force: false }).then(() => {
-  server.listen(3001, () => {
-    console.log("%s listening at 3001"); // eslint-disable-line no-console
+  server.listen(PORT || 3001, () => {
+    console.log(`%s listo en puerto ${PORT || 3001}`); // eslint-disable-line no-console
   });
 });
