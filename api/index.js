@@ -22,12 +22,12 @@
 const server = require("./src/app.js");
 const { conn } = require("./src/db.js");
 require("dotenv").config();
-const { PORT } = process.env;
+const port = process.env.PORT || 3001;
 // SINCRONIZACION CON LA BD
 // FALSE NO BORRA TABLAS
 // TRUE BORRA Y CREA NUEVAMENTE LAS TABLAS, SIRVE PARA DESARROLLO
 conn.sync({ force: false }).then(() => {
-  server.listen(PORT || 3001, () => {
-    console.log(`%s listo en puerto ${PORT || 3001}`); // eslint-disable-line no-console
+  server.listen(port, () => {
+    console.log(`%s listo en puerto ${port}`); // eslint-disable-line no-console
   });
 });
