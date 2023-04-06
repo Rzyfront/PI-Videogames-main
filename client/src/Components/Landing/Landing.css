@@ -20,7 +20,7 @@
 filter: drop-shadow(0px 0px 8px rgba(0, 0, 0, 0.642))
 }
 
-.Landing .logos h2{
+.Landing .logos h1{
     font-size: 40px;
     font-family: var(--title);
     opacity: 1;
@@ -295,11 +295,24 @@ letter-spacing: 3px;
 
 
 @media screen and (max-width: 560px) {
-    .content h2 {
-        font-size: 40px;
+
+    .containerLanding {
+      width: 350px;
     }
-         .containerLanding .btn {
-             width: 200px;
-         }
+    .content h2 {
+        font-size: 30px;
+        text-align: center;
+
+    }
+
+    .content .containerLanding .welcome{
+    font-size: 15px;
+    width: 350px;
+    text-align: center;
+    }
+        
+    .containerLanding .btn {
+        width: 200px;
+    }
 
 }

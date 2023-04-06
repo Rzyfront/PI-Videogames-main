@@ -424,6 +424,13 @@ section .containerform {
     display: flex;
     flex-wrap: wrap;
 }
+.spinner-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 200px;
+    height: 500px;
+}
 
 .genresTarget div {
     display: flex;
@@ -572,6 +579,17 @@ section .containerform {
         height: 660px;
     }
 
+    .empyMessage{
+        font-size: 15px;
+        width: 300px;
+        text-align: center;
+    }
+
+    .createMessage{
+        font-size: 15px;
+        width: 300px;
+        text-align: center;
+    }
     .containerform .title {
         font-size: 50px;
     }

@@ -544,14 +544,14 @@ ul {
 
     .filters .menuOff,
     .filters .menuOn {
-        margin-top: 5px;
         display: block;
-        font-size: 35px;
+        font-size: 30px;
+  
     }
 
 }
 
-@media screen and (max-width:750px) {
+@media screen and (max-width:550px) {
 
     section .containerhome {
             width: 350px;
@@ -607,9 +607,9 @@ ul {
     
         .filters .menuOff,
         .filters .menuOn {
-            margin-top: 5px;
             display: block;
-            font-size: 35px;
+            font-size: 30px;
+  
         }
 
 }

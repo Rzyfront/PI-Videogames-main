@@ -181,10 +181,12 @@ const Form = () => {
           <div className="square" style={{ "--i": "3" }}></div>
           <div className="square" style={{ "--i": "4" }}></div>
           <div className="containerform">
-            <div className="logos">
-              <img src={logo} alt="Nexus_Logo" width="35px" />
-              <h2>NEXUS</h2>
-            </div>
+            <NavLink to={"/"}>
+              <div className="logos">
+                <img src={logo} alt="Nexus_Logo" width="35px" />
+                <h2>NEXUS</h2>
+              </div>
+            </NavLink>
             {loading ? (
               <Loading />
             ) : (

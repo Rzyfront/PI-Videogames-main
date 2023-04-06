@@ -34,7 +34,7 @@ const Landing = () => {
     <div className={`Landing ${show ? "scale-up-center" : ""} `}>
       <div className="logos">
         <img src={logo} alt="Nexus_Logo" width="35px" />
-        <h2>NEXUS</h2>
+        <h1>NEXUS</h1>
       </div>
       <video autoPlay loop muted>
         <source src={videoMp4} type="video/mp4" />

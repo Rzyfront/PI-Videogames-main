@@ -1,10 +1,11 @@
 import React from "react";
 import { Loading } from "../Loading/Loading.jsx";
-import MenuIco from "../../Assets/MenuIco.svg";
-import RigthIco from "../../Assets/RigthIco.svg";
-import LeftIco from "../../Assets/LeftIco.svg";
-import SearchIco from "../../Assets/SearchIco.svg";
-import Refresh from "../../Assets/Refresh.svg";
+import { BsArrowLeftSquare } from "react-icons/bs";
+import { BsArrowRightSquare } from "react-icons/bs";
+import { BiSearchAlt } from "react-icons/bi";
+import { RiRefreshFill } from "react-icons/ri";
+import { CgCloseR } from "react-icons/cg";
+import { ImMenu } from "react-icons/im";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
@@ -73,18 +74,12 @@ const Home = () => {
   const renderNavigationButtons = () => {
     return (
       <div className="pag-container">
-        <img
-          src={LeftIco}
-          alt="Prev"
-          width="30px"
+        <BsArrowLeftSquare
           className="pag-btn arrows"
           onClick={() => handlePageChange(-1)}
         />
         {renderPageNumbers()}
-        <img
-          src={RigthIco}
-          alt="Next"
-          width="30px"
+        <BsArrowRightSquare
           className="pag-btn arrows"
           onClick={() => handlePageChange(1)}
         />
@@ -245,10 +240,12 @@ const Home = () => {
             <div className="containerhome">
               <div className="nav">
                 <div className="header">
-                  <div className="logos">
-                    <img src={logo} alt="Nexus_Logo" width="35px" />
-                    <h2>NEXUS</h2>
-                  </div>
+                  <NavLink to={"/"}>
+                    <div className="logos">
+                      <img src={logo} alt="Nexus_Logo" width="35px" />
+                      <h2>NEXUS</h2>
+                    </div>
+                  </NavLink>
                   <div className="inputButton">
                     <input
                       type="text"
@@ -258,7 +255,7 @@ const Home = () => {
                     />
                     <button onClick={handleSearch}>
                       Buscar
-                      <img src={SearchIco} alt="lupita" width="20px" />
+                      <BiSearchAlt />
                     </button>
                   </div>
                 </div>
@@ -270,7 +267,7 @@ const Home = () => {
                     <button className="creategame">Crear Juego +</button>
                   </NavLink>
                   <button onClick={restaurarFilter} className="desearch">
-                    <img src={Refresh} alt="R" width="20" />
+                    <RiRefreshFill />
                   </button>
                 </div>
                 <div className="selectores">
@@ -316,20 +313,14 @@ const Home = () => {
                   </select>
                 </div>
                 {!toggleMenu ? (
-                  <img
-                    src={MenuIco}
-                    alt="Menu"
-                    width="20px"
+                  <ImMenu
                     className="menuOff"
                     onClick={() => {
                       setToggleMenu(true);
                     }}
                   />
                 ) : (
-                  <img
-                    src={MenuIco}
-                    alt="Menu"
-                    width="20px"
+                  <CgCloseR
                     className="menuOn"
                     onClick={() => setToggleMenu(false)}
                   />
