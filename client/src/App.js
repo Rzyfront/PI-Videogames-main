@@ -2,7 +2,8 @@ import "./App.css";
 import { Routes, Route } from "react-router-dom";
 import { Landing, Home, Form, Detail } from "./Components/Components.js";
 import axios from "axios";
-axios.defaults.baseURL = "pi-videogames-main-production-7d41.up.railway.app";
+axios.defaults.baseURL =
+  "https://pi-videogames-main-production-7d41.up.railway.app/";
 
 function App() {
   return (
