@@ -282,11 +282,35 @@ letter-spacing: 3px;
     font-size: 20px;
 }
 
+@media screen and (max-width: 950px) {
+
+    .content h2 {
+            font-size: 70px;
+    }
+    .containerLanding {
+        width: 750px;
+    }
+    .content .containerLanding .welcome {
+            font-size: 18px;
+            width: 750px;
+            text-align: center;
+    }
+}
+
 
 @media screen and (max-width: 768px) {
     .content h2{
-        font-size: 60px;
+        font-size: 50px;
     }
+    .containerLanding {
+        width: 550px;
+    }
+   .content .containerLanding .welcome {
+       font-size: 15px;
+       width: 550px;
+       text-align: center;
+   }
+
     .containerLanding .btn {
     width: 250px;
     }
@@ -306,7 +330,7 @@ letter-spacing: 3px;
     }
 
     .content .containerLanding .welcome{
-    font-size: 15px;
+    font-size: 14px;
     width: 350px;
     text-align: center;
     }

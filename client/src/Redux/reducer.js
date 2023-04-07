@@ -13,10 +13,7 @@ const initialState = {
   gamesShown: [],
   gameDetails: {},
   genres: [],
-  errorServer: {
-    errorStatus: false,
-    errorMessage: "",
-  },
+  error: "",
 };
 
 const rootReducer = (state = initialState, { type, payload }) => {
@@ -96,10 +93,7 @@ const rootReducer = (state = initialState, { type, payload }) => {
     case ERROR_SERVER:
       return {
         ...state,
-        errorServer: {
-          errorStatus: true,
-          errorMessage: payload,
-        },
+        error: payload,
       };
     default:
       return state;

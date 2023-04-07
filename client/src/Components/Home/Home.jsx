@@ -166,6 +166,7 @@ const Home = () => {
       origin: "none",
       genre: "none",
     });
+    setGamesToRender([]);
     setLoading(true);
     setCurrentPage(0);
     setActivePage(0);
@@ -195,6 +196,7 @@ const Home = () => {
   const handleSearch = () => {
     if (name !== "") {
       dispatch(getVideogameByName(name));
+      setGamesToRender([]);
       setLoading(true);
       setCurrentPage(0);
       setActivePage(0);

@@ -479,6 +479,7 @@ section .containerform {
 }
 
 .range input {
+    appearance: none;
     -webkit-appearance: none;
     width: 65%;
     height: 30px;
@@ -489,17 +490,24 @@ section .containerform {
     -webkit-transition: opacity 0.2s;
     transition: opacity 0.2s;
     border-radius: 6px 0  0 6px;
+    box-sizing: border-box;
 }
 
+
 .range input::-webkit-slider-thumb {
+
     -webkit-appearance: none;
     appearance: none;
-    width: 10px;
-    height: 30px;
+    width: 12px;
+    height: 18px;
+    border: 1px solid var(--primary);
     background-color: var(--secondary);
     cursor: pointer;
     border-radius: 15%;
+    box-sizing: border-box;
 }
+
+
 
 .range input::-moz-range-thumb {
     width: 10px;

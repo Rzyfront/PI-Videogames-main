@@ -15,8 +15,10 @@
   
 }
 
+
 .card:hover{
     background-color: var(--bg-primary);
+    transform: scale(1.05);
 }
 
 .card:hover .card-genres {
@@ -35,10 +37,28 @@
     border-bottom: 2px solid var(--secondary);
 }
 
-
-.card:hover {
+.card:active {
+    background-color: var(--bg-primary);
     transform: scale(1.05);
 }
+
+.card:active .card-genres {
+    border-radius: 10px 10px 0 0;
+    opacity: 1;
+    transform: translateY(0%);
+}
+
+.card:active .card-genres p {
+    -webkit-animation: bounce-in-right 1s ease-in-out;
+    animation: bounce-in-right 1s ease-in-out;
+}
+
+.card:active .card-title {
+    color: var(--primary);
+    border-bottom: 2px solid var(--secondary);
+}
+
+
 
 .card .card-genres {
     position: absolute;
