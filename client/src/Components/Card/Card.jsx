@@ -8,7 +8,11 @@ const Card = ({ id, name, image, genres }) => {
       <div className="card" key={id}>
         <div className="card-genres">
           {genres?.map((genre) => {
-            return <p key={genre.name}>{genre.name}</p>;
+            return (
+              <p className="bounce-in-top" key={genre.name}>
+                {genre.name}
+              </p>
+            );
           })}
         </div>
         <img src={image} alt={name} width="250px" height="160" />

@@ -36,23 +36,7 @@ const Home = () => {
   const [activePage, setActivePage] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
   const [name, setName] = useState("");
-  useEffect(() => {
-    if (!gamesShown || gamesShown.length === 0) {
-      dispatch(getAllVideogames());
-    } else {
-      setLoading(false);
-    }
-  }, [gamesShown, dispatch]);
-
-  useEffect(() => {
-    if (!genres || genres.length === 0) {
-      dispatch(getGenres());
-    }
-  }, [genres, dispatch]);
-
-  useEffect(() => {
-    dispatch(Filter(filters));
-  }, [filters, dispatch]);
+  const [gamesToRender, setGamesToRender] = useState([]);
 
   const handlePageChange = (increment) => {
     const nextPage = currentPage + increment;
@@ -65,11 +49,6 @@ const Home = () => {
       }, 600);
     }
   };
-
-  let gamesToRender = gamesShown.slice(
-    currentPage * gamesPerPage,
-    (currentPage + 1) * gamesPerPage
-  );
 
   const renderNavigationButtons = () => {
     return (
@@ -224,6 +203,33 @@ const Home = () => {
       }, 3000);
     }
   };
+
+  useEffect(() => {
+    if (!gamesShown || gamesShown.length === 0) {
+      dispatch(getAllVideogames());
+    } else {
+      setGamesToRender(
+        gamesShown.slice(
+          currentPage * gamesPerPage,
+          (currentPage + 1) * gamesPerPage
+        )
+      );
+      setTimeout(() => {
+        setLoading(false);
+      }, 1000);
+    }
+  }, [gamesShown, dispatch, currentPage]);
+
+  useEffect(() => {
+    if (!genres || genres.length === 0) {
+      dispatch(getGenres());
+    }
+  }, [genres, dispatch]);
+
+  useEffect(() => {
+    dispatch(Filter(filters));
+  }, [filters, dispatch]);
+
   return (
     <div className="Home">
       <div className="renderCards">

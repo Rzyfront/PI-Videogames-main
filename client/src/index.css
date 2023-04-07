@@ -6,6 +6,10 @@ body {
   box-sizing: border-box;
   background-color: var(--bg-primary);
 }
+
+a{
+  text-decoration: none;
+}
 @font-face {
   font-family: gamer;
   src: url('./Assets/Acients.ttf') format('truetype');
