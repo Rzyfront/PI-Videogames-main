@@ -159,6 +159,7 @@ const Home = () => {
   };
 
   const restaurarFilter = () => {
+    setGamesToRender([]);
     dispatch(getAllVideogames());
     setFilters({
       alphabetic: "none",
@@ -166,7 +167,6 @@ const Home = () => {
       origin: "none",
       genre: "none",
     });
-    setGamesToRender([]);
     setLoading(true);
     setCurrentPage(0);
     setActivePage(0);

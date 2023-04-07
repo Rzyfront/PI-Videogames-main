@@ -18,6 +18,7 @@ export function getAllVideogames() {
         payload: result.data,
       });
     } catch (error) {
+      console.log(error.message);
       return dispatch({
         type: ERROR_SERVER,
         payload: error.message,
@@ -35,6 +36,7 @@ export function getVideogameByName(name) {
         payload: result.data,
       });
     } catch (error) {
+      console.log(error.message);
       return dispatch({
         type: ERROR_SERVER,
         payload: error.message,
@@ -52,6 +54,7 @@ export function getGameDetails(id) {
         payload: result.data,
       });
     } catch (error) {
+      console.log(error.message);
       return dispatch({
         type: ERROR_SERVER,
         payload: error.message,
@@ -69,6 +72,7 @@ export function getGenres() {
         payload: result.data,
       });
     } catch (error) {
+      console.log(error.message);
       return dispatch({
         type: ERROR_SERVER,
         payload: error.message,
@@ -84,6 +88,7 @@ export function postVideogames(dataGame) {
       //agregalo a los juegos que se muestran en pantalla
       dispatch({ type: POST_VIDEOGAME, payload: result.data });
     } catch (error) {
+      console.log(error.message);
       return dispatch({
         type: ERROR_SERVER,
         payload: error.message,

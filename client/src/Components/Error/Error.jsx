@@ -3,8 +3,8 @@ import errorimg from "../../Assets/Error.jpg";
 import { useSelector } from "react-redux";
 import "./Error.css";
 function Error() {
-  const [errorMessage, setErrorMessage] = useState("Error 404");
   const { error } = useSelector((state) => state);
+  const [errorMessage, setErrorMessage] = useState(error || "Error 404");
   useEffect(() => {
     if (error) {
       setErrorMessage(error);
